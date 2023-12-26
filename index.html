@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 1.Фильтрация строки -->
+    <script>
+        const string = "Привет, как дела?";
+
+        const vowels = ["а", "о", "э", "е", "и", "у", "ю", "ы"];
+
+        const getVowels = stringToFilter => {
+            let extractedVowels = "";
+            for(let i = 0; i < stringToFilter.length; i++) {
+                const currentLetter = stringToFilter[i].toLowerCase();
+
+                if (vowels.includes(currentLetter)) {
+                extractedVowels += currentLetter;
+                }
+            }
+
+            return extractedVowels;
+        }
+
+        console.log(getVowels(string));
+    </script>
+    <!-- 2.Выборка объекта -->
+    <style>
+        .form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+    </style>
+    <form id="myForm" class="form">
+        <div>
+            Имя:<br>
+            <input type="text" name="name">
+        </div>
+        <div>
+            Фамилия:<br>
+            <input type="text" name="lastName">
+        </div>
+        <div>
+            Пол:<br>
+            <select name="gender">
+                <option value="m">М</option>
+                <option value="f">Ж</option>
+            </select>
+        </div>
+        <div>
+            <input type="checkbox" name="auto">есть автомобиль
+        </div>
+        <br>
+        <button id="sendButton">отправить</button>
+    </form>
+    <script>
+        const myForm = document.querySelector('#myForm');
+        const sendButton = document.querySelector('#sendButton');
+        sendButton.addEventListener ('click', function(event) {
+            event.preventDefault();
+            console.log(myForm.elements.name.value)
+        console.log(myForm.elements.lastName.value)
+        if(myForm.elements.gender.value == 'm') {
+            console.log ('мужчина')
+        } else {
+            console.log('женщина')
+        }
+        if(myForm.elements.auto.checked == true) {
+            console.log('есть автомобиль')
+        } else {
+            console.log('нет автомобиля')
+        }
+        });
+    </script>
+    <!-- 3.Анализ строки -->
+    <script>
+        const path = "/users/download/index.html";
+
+        const isHtml = path => {
+            const requiredExt = ".html";
+            const pathExt = path.slice(-5);
+
+            if (pathExt == requiredExt) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+
+        console.log(isHtml(path));
+    </script>
+    <!-- 4.Фильтрация массива -->
+    <script>
+        const mixedArray = [3,13,74,14,66,15,22,4];
+
+        const isEven = num => {
+            return num % 2 == 0;
+        };
+
+        const filterArray = (arrayToFilter, filterFn) => {
+            const filteredArray = [];
+
+            arrayToFilter.forEach(num => {
+                if(filterFn(num)) {
+                    filteredArray.push(num);
+                }
+            })
+            return filteredArray;
+        }
+
+        console.log(filterArray(mixedArray, isEven));
+    </script>
+    <!-- 5.Слайдер -->
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        li {
+            list-style: none;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .conteiner__slider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .slider {
+            display: flex;
+            width: 300px;
+            overflow: hidden;
+            margin-right: 20px;
+            margin-left: 20px;
+        }
+        .items {
+            display: flex;
+            position: relative;
+            right: 0;
+            transition: right .4s;
+        }
+        .item {
+            width: 100px;
+            height: 100px;
+            background-color: aquamarine;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid black;
+        }
+        li, a {
+            font-size: 40px;    
+        }
+    </style>
+    <div class="conteiner__slider">
+        <a id="left" href="" class="arrow">←</a>
+        <div class="slider">
+            <ul id="items" class="items">
+                <li class="item">1</li>
+                <li class="item">2</li>
+                <li class="item">3</li>
+                <li class="item">4</li>
+                <li class="item">5</li>
+                <li class="item">6</li>
+                <li class="item">7</li>
+                <li class="item">8</li>
+            </ul>
+        </div>
+        <a id="right" href="" class="arrow">→</a>
+    </div>
+    <script>
+        const left = document.querySelector("#left");
+        const right = document.querySelector("#right");
+        const itemsList = document.querySelector("#items");
+        const computedStyles = window.getComputedStyle(itemsList);
+        const item = document.querySelector("#item");
+
+        const minRight = 0;
+        const maxRight = 500;
+        const step = 100;
+
+        right.addEventListener("click", e => {
+            e.preventDefault();
+            let currentRight = parseInt(computedStyles.right);
+
+            if (currentRight < maxRight) {
+                currentRight += step;
+                itemsList.style.right = `${currentRight}px`;
+            }
+        });
+
+        left.addEventListener("click", e => {
+            e.preventDefault();
+            let currentRight = parseInt(computedStyles.right);
+
+            if (currentRight > minRight) {
+                currentRight -= step;
+                itemsList.style.right = `${currentRight}px`;
+            }
+        });
+    </script>
+    <!-- 6.Модальное окно -->
+    <style>
+        .conteiner {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            padding-top: 100px;
+            margin: 0 auto;
+            max-width: 900px;
+        }
+        button {
+            cursor: pointer;
+        }
+        .btn {
+            width: 100px;
+            height: 40px;
+            background: blueviolet;
+            color: #fff;
+            font-weight: 700;
+            font-size: 16px;
+        }
+        .text {
+            margin-bottom: 20px;
+        }
+        .overlay {
+            position:absolute;
+            top: 400px;
+            left: 300px;
+            right: 300px;
+            bottom: 200px;
+            background: grey;
+            opacity: 0.5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+        .modal-conteiner {
+            width: 400px;
+            height: 40px;
+            background: black;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .content {
+            color: #fff;
+            font-size: 24px;
+            padding-left: 10px;
+            
+        }
+        .close {
+            width: 20px;
+            height: 20px;
+            background: red;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            color: #fff;
+        }
+    </style>
+    <div id="wrapper" class="wrapper">
+        <div class="conteiner">
+            <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim alias reprehenderit, commodi quaerat asperiores possimus consectetur aut similique numquam Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus corporis incidunt expedita aperiam itaque nostrum repudiandae dolorum! Incidunt, pariatur consequatur.</p>
+            <button id="open" class="btn">открыть</button>
+        </div>
+    </div>
+    <script>
+        const openButton = document.querySelector("#open");
+        const wrapper = document.querySelector("#wrapper");
+
+        openButton.addEventListener("click", e => {
+            const overlayElement = document.createElement("div");
+            overlayElement.classList.add("overlay");
+
+            overlayElement.addEventListener("click", e => {
+                if (e.target == overlayElement) {
+                    closeElement.click();
+                }
+            })
+
+            const contienerElement = document.createElement("div");
+            contienerElement.classList.add("modal-conteiner");
+
+            const contentElement = document.createElement("div");
+            contentElement.classList.add("content");
+            contentElement.innerHTML = "Hello World!";
+
+            const closeElement = document.createElement("a");
+            closeElement.classList.add("close");
+            closeElement.textContent = "x";
+            closeElement.href = "#";
+
+            closeElement.addEventListener("click", e => {
+                e.preventDefault();
+                wrapper.removeChild(overlayElement);
+            })
+
+            overlayElement.appendChild(contienerElement);
+            contienerElement.appendChild(closeElement);
+            contienerElement.appendChild(contentElement);
+
+            wrapper.appendChild(overlayElement);
+        })
+    </script>
+    <!-- 7.Создание и работа с DOM -->
+    <style>
+        .conteiner__block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 130px;
+        }
+        .blocks {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .conteiner__block .item {
+            margin: 10px;
+            font-size: 40px;
+            background: #fff;
+        }
+    </style>
+    <div class="conteiner__block">
+        <div class="controls">
+            <input type="number" min="0" class="number-selector">
+            <input type="color" class="color-selector">
+        </div>
+        <div class="blocks"></div>
+    </div>
+    <script>
+        const numberSelector = document.querySelector(".number-selector");
+        const colorSelector = document.querySelector(".color-selector");
+        const blocksConteiner = document.querySelector(".blocks");
+
+        const createMarkup = quantity => {
+            let markup = "";
+
+            for(let i = 0; i < quantity; i++) {
+                const block =document.createElement("div");
+                block.className = "item";
+                block.innerText = i + 1;
+
+                markup += block.outerHTML;
+            }
+            return markup;
+        }
+
+        numberSelector.addEventListener("change", e => {
+            const quantity = e.target.value;
+            const markup = createMarkup(quantity);
+            blocksConteiner.innerHTML = markup;
+        })
+
+        const colorTheBlock = (block, color) => {
+            block.style.backgroundColor = color;
+        }
+
+        let changed = false;
+
+        colorSelector.addEventListener("change", e => {
+            const color = e.target.value
+            const items = blocksConteiner.querySelectorAll(".item");
+
+            changed = !changed;
+
+            for (let i = 0; i < items.length; i++) {
+                const currentBlock = items[i];
+                const blockNumber = i + 1;
+                let colorToApplay = "";
+
+                if (changed) {
+                    colorToApplay = blockNumber % 2 !== 0 ? color : "#fff";
+                } else {
+                    colorToApplay = blockNumber % 2 == 0 ? color : "#fff"; 
+                }
+                colorTheBlock(currentBlock, colorToApplay);
+            }
+        })
+    </script>
+</body>
+</html>
